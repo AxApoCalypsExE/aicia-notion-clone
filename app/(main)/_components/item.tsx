@@ -46,18 +46,35 @@ const Item = ({
   const router = useRouter();
   const create = useMutation(api.documents.create);
   const archive = useMutation(api.documents.archive);
+  const restore = useMutation(api.documents.restore);
+
+  const onRestore = () => {
+    if (!id) return;
+    const promise = restore({ id });
+
+    toast.promise(promise, {
+      loading: "Restoring note...",
+      success: "Note restored!",
+      error: "Failed to restore note."
+    });
+  };
 
   const onArchive = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.stopPropagation();
     if (!id) return;
-    const promise = archive({ id });
+    const promise = archive({ id })
+    .then(() => router.push("/documents"))
 
     toast.promise(promise, {
       loading: "Moving to trash...",
       success: "Note moved to trash!",
       error: "Failed to archive note.",
+      action: {
+        label: 'Undo',
+        onClick: () => onRestore()
+      },
     });
   };
 
@@ -76,7 +93,7 @@ const Item = ({
         if (!expanded) {
           onExpand?.();
         }
-        // router.push(`/documents/${documentId}`);
+        router.push(`/documents/${documentId}`);
       }
     );
 
@@ -111,7 +128,7 @@ const Item = ({
       {documentIcon ? (
         <div className="shrink-0 mr-2 text-[18px]">{documentIcon}</div>
       ) : (
-        <Icon className="shrink-0 h-[18px] mr-2 text-muted-foreground" />
+        <Icon className="shrink-0 h-[18px] w-[18px] mr-2 text-muted-foreground" />
       )}
       <span className="truncate">{label}</span>
       {isSearch && (

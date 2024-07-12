@@ -1,10 +1,16 @@
 "use client";
 
+import "@blocknote/core/fonts/inter.css";
+import { useCreateBlockNote } from "@blocknote/react";
+import { BlockNoteView } from "@blocknote/mantine";
+
 import { useEdgeStore } from "@/lib/edgestore";
 import { PartialBlock } from "@blocknote/core";
-import { BlockNoteViewRaw as BlockNoteView, useCreateBlockNote } from "@blocknote/react";
-import "@blocknote/react/style.css";
 import { useTheme } from "next-themes";
+
+import "@blocknote/mantine/style.css"
+
+import "./styles.css";
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -12,7 +18,7 @@ interface EditorProps {
   editable?: boolean;
 }
 
-export const Editor = ({
+const Editor = ({
     onChange,
     initialContent,
     editable
@@ -35,6 +41,7 @@ export const Editor = ({
     uploadFile: handleUpload,
   });
 
+
   return (
     <div>
       <BlockNoteView
@@ -48,6 +55,8 @@ export const Editor = ({
     </div>
   );
 };
+
+export default Editor;
 
 
 //   const handleOnChange = useCallback(() => {

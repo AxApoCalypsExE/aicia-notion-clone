@@ -1,0 +1,14 @@
+/* styles.css */
+
+/* Target the .bn-editor class when in dark mode */
+[data-theme="dark"] .bn-editor {
+    --bn-colors-editor-background: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  /* Additionally, if needed, target the container as well */
+  [data-theme="dark"] .bn-container {
+    --bn-colors-editor-background: transparent !important;
+    background-color: transparent !important;
+  }
+  
